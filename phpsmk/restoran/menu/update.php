@@ -1,8 +1,17 @@
 <?php
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    $sql = "SELECT * FROM tblmenu WHERE idmenu=$id";
+
+    $item = $db->getITEM($sql);
+
+    $idkategori = $item['idkategori'];
+}
 $row = $db->getALL("SELECT * FROM tblkategori ORDER BY kategori ASC");
 ?>
 
-<h3>Insert Menu</h3>
+<h3>Update Menu</h3>
 <div class="form-group">
     <form action="" method="POST" enctype="multipart/form-data">
 
@@ -11,7 +20,7 @@ $row = $db->getALL("SELECT * FROM tblkategori ORDER BY kategori ASC");
             <label for="">Kategori</label><br>
             <select name="idkategori" id="">
                 <?php foreach ($row as $r) : ?>
-                    <option value="<?php echo $r['idkategori'] ?>"><?php echo $r['kategori'] ?></option>
+                    <option <?php if ($idkategori == $r['idkategori']) echo "selected" ?> value="<?php echo $r['idkategori'] ?>"><?php echo $r['kategori'] ?></option>
                 <?php endforeach ?>
             </select>
 
@@ -19,13 +28,13 @@ $row = $db->getALL("SELECT * FROM tblkategori ORDER BY kategori ASC");
         <div class="form-group w-50">
 
             <label for="">Nama menu</label>
-            <input class="form-control" type="text" name="menu" placeholder="isi menu" required>
+            <input class="form-control" type="text" name="menu" value="<?php echo $item['menu'] ?>" required>
 
         </div>
         <div class="form-group w-50">
 
             <label for="">Harga</label>
-            <input class="form-control" type="text" name="harga" placeholder="isi harga" number required>
+            <input class="form-control" type="text" name="harga" value="<?php echo $item['harga'] ?>" number required>
 
         </div>
         <div class="form-group w-50">
@@ -46,16 +55,21 @@ if (isset($_POST['simpan'])) {
     $menu = $_POST['menu'];
     $harga = $_POST['harga'];
     $idkategori = $_POST['idkategori'];
-    $gambar = $_FILES['gambar']['name'];
+    $gambar = $item['gambar'];
     $temp = $_FILES['gambar']['tmp_name'];
 
-    if (empty($gambar)) {
-        echo "<h3> GAMBAR KOSONG </h3>";
-    } else {
-        $sql = "INSERT INTO tblmenu VALUES ('',$idkategori,'$menu','$gambar',$harga)";
+    if (!empty($temp)) {
+        $gambar = $_FILES['gambar']['name'];
         move_uploaded_file($temp, '../upload/' . $gambar);
-        $db->runSQL($sql);
-        header("location:?f=menu&m=select");
     }
+
+
+
+
+    $sql = "UPDATE tblmenu SET idkategori=$idkategori, 
+            menu='$menu', gambar='$gambar', harga= $harga WHERE idmenu = $id";
+
+    $db->runSQL($sql);
+    header("location:?f=menu&m=select");
 }
 ?>

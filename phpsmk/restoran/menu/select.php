@@ -64,11 +64,11 @@ $no = 1 + $mulai;
 
 ?>
 
-<table class="table table-bordered w-80">
+<table class="table table-bordered w-80 mt-4">
     <thead>
         <tr>
             <th>No</th>
-            <th>menu</th>
+            <th>Menu</th>
             <th>Harga</th>
             <th>Gambar</th>
             <th>Delete</th>
