@@ -23,9 +23,7 @@ $db = new DB;
 
 
         <div class="row">
-
             <div class="col-4 mx-auto mt-4">
-
                 <div class="form-group">
                     <form action="" method="POST">
 
@@ -48,10 +46,7 @@ $db = new DB;
                         </div>
                     </form>
                 </div>
-
-
             </div>
-
         </div>
 
     </div>
