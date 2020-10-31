@@ -70,7 +70,7 @@ function inorderdet($idorder = 1)
     {
         foreach ($_SESSION as $key => $value) {
 
-            if ($key <> 'pelanggan' && $key <> 'idpelanggan') {
+            if ($key <> 'pelanggan' && $key <> 'idpelanggan' && $key <> 'user' && $key <> 'level' && $key <> 'iduser') {
                 $id = substr($key, 1);
 
                 unset($_SESSION['_' . $id]);
